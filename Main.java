@@ -9,29 +9,28 @@ import org.openrdf.rio.Rio;
 
 
 public class Main {
-	public static void main(String args[]) throws FileNotFoundException {
+    public static void main(String args[]) throws FileNotFoundException {
 		
-		Reader reader = new FileReader(PathFile.source_file);
+	Reader reader = new FileReader(PathFile.source_file);
 
-		RDFParser rdfParser = Rio.createParser(RDFFormat.RDFXML);
-		RDFListener rdfListener = new RDFListener();
-		rdfParser.setRDFHandler(rdfListener);
-		try {
-			rdfParser.parse(reader, "");
-		} catch (Exception e) {
+	RDFParser rdfParser = Rio.createParser(RDFFormat.RDFXML);
+	RDFListener rdfListener = new RDFListener();
+	rdfParser.setRDFHandler(rdfListener);
+	try {
+	    rdfParser.parse(reader, "");
+	} catch (Exception e) {
 
-		}
-
-		try {
-			reader.close();
-		} catch (IOException e) {
-		}
-		
-		Dictionary dico = rdfListener.getDico();
-		dico.save();
-		GraphData grData = dico.getGrData();
-		NeighIndex nghInd = new NeighIndex(grData);
-		nghInd.create();
-		System.out.println("LOLILOL");
 	}
+
+	try {
+	    reader.close();
+	} catch (IOException e) {
+	}
+		
+	Dictionary dico = rdfListener.getDico();
+	dico.save();
+	GraphData grData = dico.getGrData();
+	NeighIndexBis nghInd = new NeighIndexBis(grData);
+	nghInd.create();
+    }
 }
