@@ -22,14 +22,14 @@ public class NeighIndexBis {
 		HashMap<Integer, GraphNeighboorBis.Row> rows = grNbs.getRows();
 		int cpt = 1;
 		rows.put(0, grNbs.new Row(cpt++, -1, null, null));
-		System.out.println("node = " + node.getId());
+		//System.out.println("node = " + node.getId());
 		for(int i = 0; i < rels.size(); i++){
 		    Relation rel = rels.get(i);
 		    int o = rel.getChild().getId();
 		    ArrayList<Integer> preds = rel.getPreds();
 		    if(i == 0){
 			for(int j = 0; j < preds.size(); j++){
-			    System.out.print(preds.get(j) + " ");
+			    //System.out.print(preds.get(j) + " ");
 			    ArrayList<Integer> ps = new ArrayList<>();
 			    for(int k = 0; k <= j; k++){
 				ps.add(preds.get(k));
@@ -57,7 +57,7 @@ public class NeighIndexBis {
 			}
 			grNbs.setEndBottomToUp(cpt, sizeRm);
 			for(int j = 0; j < preds.size(); j++){
-			    System.out.print(preds.get(j) + " ");
+			    //System.out.print(preds.get(j) + " ");
 			    if(j < sizePrefSh){
 				ArrayList<Integer> ps = new ArrayList<>();
 				for(int k = 0; k <= j; k++){
@@ -86,19 +86,19 @@ public class NeighIndexBis {
 		    if(i == rels.size()-1){
 			grNbs.setEndBottomToUp(cpt, preds.size());
 		    }
-		    System.out.println();
+		    //System.out.println();
 		}
 		grNeighbs.put(node.getId(), grNbs);
-		System.out.println();
-	       	System.out.println(grNbs);
+		//System.out.println();
+	       	//System.out.println(grNbs);
 		ArrayList<Integer> ps = new ArrayList<Integer>();
 		ps.add(2567);
 		ArrayList<Integer> nbs = neighbs(node.getId(), ps);
 		for(int nb : nbs){
-		    System.out.print(nb + " ");		    
+		    //System.out.print(nb + " ");		    
 		}
-		System.out.println();
-		System.out.println();
+		//System.out.println();
+		//System.out.println();
 	    }
 	}
     }

@@ -15,6 +15,7 @@ public class Dictionary {
     private GraphData grData = new GraphData();
     private HashMap<Integer, Node> nodes = grData.getNodes();
     private HashMap<Integer, Relation> rels = grData.getRels();
+    private HashMap<Integer, ArrayList<Integer>> index_preds = grData.getIndexPreds();
     private int sizeRels = 0; 
 	
     public void add(String v1, String v2, String v3){
@@ -29,6 +30,7 @@ public class Dictionary {
 	if(k2 == -1){
 	    k2 = sizeDico;
 	    dico.put(k2, v2);
+	    index_preds.put(k2, new ArrayList<Integer>());
 	    sizeDico++;
 	}
 	int k3 = getKey(v3);

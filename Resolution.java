@@ -4,41 +4,49 @@ import java.util.Map;
 
 
 public class Resolution {
-	private Dictionary dico = null;
-	private QueryParser qPsr = null;
+    private HashMap<Integer, String> dico = null;
+    private GraphData grData = null;
+    private QueryGraph qGr = null;
+    private NeighIndexBis nghInd = null;
 	
-	public Resolution(Dictionary dico, QueryParser qPsr) {
-		super();
-		this.dico = dico;
-		this.qPsr = qPsr;
-	}
+    public Resolution(HashMap<Integer, String> dico, GraphData grData, QueryGraph qGr, NeighIndexBis nghInd) {
+	this.dico = dico;
+	this.grData = grData;
+	this.qGr = qGr;
+	this.nghInd = nghInd;
 	
-	/*public ArrayList<String> execute(){
-		ArrayList<String> results = new ArrayList<>();
-		ArrayList<Integer> results_int = new ArrayList<>();
-		ArrayList<String[]> list_p_o = qPsr.getList_p_o();
-		ArrayList<Integer[]> list_p_o_int = new ArrayList<>();
-		for(String[] p_o : list_p_o){
-			list_p_o_int.add(new Integer[]{dico.getKey(p_o[0]), dico.getKey(p_o[1])});
-		}
-		HashMap<Integer, Node> nodes = dico.getNodes();
-		int nodes_size = nodes.size();
-		ArrayList<Integer> list_s_traited = new ArrayList<>();
-		for(Map.Entry<Integer, Node> entry : nodes.entrySet()) {
-		    Node n = entry.getValue();
-		    int id = n.getId(); 
-			if(!list_s_traited.contains(id)){
-				
-			}
-		}
-		return results;
-	}*/
+    }    
 	
-	public boolean node_contain_p_o(Node n, ArrayList<Integer[]> list_p_o_int){
+    public ArrayList<String> execute(){
+	ArrayList<String> results = new ArrayList<>();
+	HashMap<Integer, Node> nodesQG = qGr.getNodes();
+	ArrayList<Integer> indexNS = qGr.getNodesSort();
+	ArrayList<Integer> indexNodeFinalSort = indexNS;
+	Node nodeQGInit = nodesQG.get(indexNodeFinalSort.get(1));
+	ArrayList<Integer> predsQGInit = nodeQGInit.getRelFath().getPreds();
+	HashMap<Integer, ArrayList<Integer>> indexPreds = grData.getIndexPreds();
+	ArrayList<Integer> indexEnsInit = indexPreds.get(predsQGInit.get(0));
+	HashMap<Integer, Node> nodesData = grData.getNodes();
+	for(int i : indexEnsInit){
+	    Node nodeMatch = nodesData.get(i);
+	    int id = nodeMatch.getId();
+	    if(nghInd.neighbs(id, predsQGInit).contains(nodeQGInit.getId())){
+		int j = 2;
 		boolean bool = true;
-		for(Integer[] p_o_int : list_p_o_int){
-			
+		while(j < indexNodeFinalSort.size() && bool){
+		    Node nodeQGNext = nodesQG.get(indexNodeFinalSort.get(j));
+		    if(nghInd.neighbs(id, nodeQGNext.getRelFath().getPreds()).contains(nodeQGNext.getId())){
+			j++;
+		    }
+		    else{
+			bool = false;
+		    }
 		}
-		return bool;
+		if(bool){
+		    results.add(dico.get(id));
+		}
+	    }
 	}
+	return results;
+    }       
 }

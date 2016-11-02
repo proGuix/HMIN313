@@ -7,6 +7,9 @@ import org.openrdf.rio.RDFFormat;
 import org.openrdf.rio.RDFParser;
 import org.openrdf.rio.Rio;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 
 public class Main {
     public static void main(String args[]) throws FileNotFoundException {
@@ -30,7 +33,25 @@ public class Main {
 	Dictionary dico = rdfListener.getDico();
 	dico.save();
 	GraphData grData = dico.getGrData();
+	grData.createIndex();
 	NeighIndexBis nghInd = new NeighIndexBis(grData);
 	nghInd.create();
+	HashMap<Integer, String> dicoHM = dico.getDico();
+
+	long startTime = System.currentTimeMillis();
+
+	QueryParser qPsr = new QueryParser(dico);
+	qPsr.parse();
+	qPsr.createGraph();
+	QueryGraph qGr = qPsr.getQueryGraph();
+	Resolution res = new Resolution(dicoHM, grData, qGr, nghInd);
+	ArrayList<String> result = res.execute();
+	for(String str : result){
+	    System.out.println(str);
+	}
+
+	long endTime   = System.currentTimeMillis();
+	long totalTime = endTime - startTime;
+	System.out.println("Time execute query " + totalTime + " ms");
     }
 }
