@@ -6,6 +6,19 @@ public class GraphData {
     private HashMap<Integer, Node> nodes = new HashMap<Integer, Node>();
     private HashMap<Integer, Relation> rels = new HashMap<Integer, Relation>();
     private HashMap<Integer, ArrayList<Integer>> index_preds = new HashMap<>();
+    private HashMap<Integer, Integer> nbOccPreds = new HashMap<>();
+
+
+    public void initNbOccPreds(){
+	for(int key : rels.keySet()){
+	    Relation rel = rels.get(key);
+	    ArrayList<Integer> ps = rel.getPreds();
+	    for(int p : ps){
+		int nb = nbOccPreds.get(p);
+		nbOccPreds.put(p, nb + 1);
+	    }
+	}
+    }
 
     public void createIndex(){
 	for(int key : nodes.keySet()){
@@ -34,7 +47,7 @@ public class GraphData {
 	    for(int ind : index_p){
 		str += ind + " ";
 	    }
-	    str += "\n";
+	    str += "\n NbOccPred = " + nbOccPreds.get(key) + "\n";
 	}
 	return str;
     }
@@ -58,5 +71,9 @@ public class GraphData {
 
     public HashMap<Integer, ArrayList<Integer>> getIndexPreds(){
 	return index_preds;
+    }
+
+    public HashMap<Integer,Integer> getNbOccPreds(){
+	return nbOccPreds;
     }
 }

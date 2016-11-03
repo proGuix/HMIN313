@@ -34,6 +34,9 @@ public class Main {
 	dico.save();
 	GraphData grData = dico.getGrData();
 	grData.createIndex();
+	grData.initNbOccPreds();
+	PrefixTreeData prefTrData = new PrefixTreeData(grData);	
+	prefTrData.create();
 	NeighIndexBis nghInd = new NeighIndexBis(grData);
 	nghInd.create();
 	HashMap<Integer, String> dicoHM = dico.getDico();

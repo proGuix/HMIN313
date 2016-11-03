@@ -15,13 +15,63 @@ public class Resolution {
 	this.qGr = qGr;
 	this.nghInd = nghInd;
 	
-    }    
+    }
+
+    public ArrayList<Integer> indexNFS(ArrayList<Integer> index, ArrayList<Integer> sortPreds, HashMap<Integer, Node> nodesQG){
+	ArrayList<Integer> indexCopy = new ArrayList<>();
+	for(int i : index){
+	    indexCopy.add(i);
+	}
+	ArrayList<Integer> indexNFS = new ArrayList<>();
+	indexNFS.add(indexCopy.get(0));
+	for(int p : sortPreds){
+	    for(int i = 1; i < indexCopy.size(); i++){
+		if(nodesQG.get(indexCopy.get(i)).getRelFath().getPreds().contains(p)){
+		    indexNFS.add(indexCopy.get(i));
+		    indexCopy.remove(i);
+		    i--;
+		}
+	    }
+	}
+	return indexNFS;
+    }
+
+    public ArrayList<Integer> sortPreds(ArrayList<Integer> preds){	
+	HashMap<Integer,Integer> nbOccPreds = grData.getNbOccPreds();
+	ArrayList<Integer> ps = new ArrayList<>();
+	for(int p : preds){
+	    ps.add(p);
+	}
+	ArrayList<Integer> psSort = new ArrayList<>();
+	for(int i = 0; i < preds.size(); i++){
+	    int min = minOccPred(ps, nbOccPreds);
+	    psSort.add(min);
+	}
+	return psSort;
+    }
+
+    public int minOccPred(ArrayList<Integer> preds, HashMap<Integer,Integer> nbOccPreds){
+	int minInd = 0;
+	for(int i = 1; i < preds.size(); i++){
+	    int n1 = nbOccPreds.get(preds.get(minInd));
+	    int n2 = nbOccPreds.get(preds.get(i));
+	    if(n1 > n2){
+		minInd = i;
+	    }
+	}
+	int min = preds.get(minInd);
+	preds.remove(minInd);
+	return min;
+    }
 	
     public ArrayList<String> execute(){
 	ArrayList<String> results = new ArrayList<>();
 	HashMap<Integer, Node> nodesQG = qGr.getNodes();
 	ArrayList<Integer> indexNS = qGr.getNodesSort();
-	ArrayList<Integer> indexNodeFinalSort = indexNS;
+
+	ArrayList<Integer> srtPrds = sortPreds(qGr.getPreds());
+        ArrayList<Integer> indexNodeFinalSort = indexNFS(indexNS, srtPrds, nodesQG);
+
 	Node nodeQGInit = nodesQG.get(indexNodeFinalSort.get(1));
 	ArrayList<Integer> predsQGInit = nodeQGInit.getRelFath().getPreds();
 	HashMap<Integer, ArrayList<Integer>> indexPreds = grData.getIndexPreds();

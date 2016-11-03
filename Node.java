@@ -11,7 +11,10 @@ public class Node {
     private String var_name = null;;
     private ArrayList<Relation> rels = null;
     private Relation relFath = null;
+    private ArrayList<Integer> list_id = null;
 	
+    public Node(){}
+
     public Node(int id) {
 	this.id = id;
     }
@@ -19,6 +22,13 @@ public class Node {
     public Node(String name_vr) {
 	this.id = id;
 	this.tp = tp;
+    }
+
+    public void addId(int id){
+	if(list_id == null){
+	    list_id = new ArrayList<>();
+	}
+	list_id.add(id);
     }
 
     public void addRel(Relation rel){
@@ -38,6 +48,10 @@ public class Node {
 	
     public Integer getId() {
 	return id;
+    }
+
+    public ArrayList<Integer> getList_Id() {
+	return list_id;
     }
 
     public ArrayList<Relation> getRels() {

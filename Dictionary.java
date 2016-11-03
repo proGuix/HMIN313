@@ -16,6 +16,7 @@ public class Dictionary {
     private HashMap<Integer, Node> nodes = grData.getNodes();
     private HashMap<Integer, Relation> rels = grData.getRels();
     private HashMap<Integer, ArrayList<Integer>> index_preds = grData.getIndexPreds();
+    private HashMap<Integer, Integer> nb_occ_preds = grData.getNbOccPreds();
     private int sizeRels = 0; 
 	
     public void add(String v1, String v2, String v3){
@@ -31,6 +32,7 @@ public class Dictionary {
 	    k2 = sizeDico;
 	    dico.put(k2, v2);
 	    index_preds.put(k2, new ArrayList<Integer>());
+	    nb_occ_preds.put(k2, 0);
 	    sizeDico++;
 	}
 	int k3 = getKey(v3);

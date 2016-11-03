@@ -8,6 +8,19 @@ public class QueryGraph {
     private ArrayList<Integer> nodes_sort = new ArrayList<>();
     private int cptNodes = 0;
     private int cptRels = 0;
+
+    public ArrayList<Integer> getPreds(){
+	ArrayList<Integer> preds = new ArrayList<>();
+	for(int key : rels.keySet()){
+	    ArrayList<Integer> ps = rels.get(key).getPreds();
+	    for(int p : ps){
+		if(!preds.contains(p)){
+		    preds.add(p);
+		}
+	    }
+	}
+	return preds;
+    }
 	
     public HashMap<Integer, Node> getNodes(){
 	return nodes;
