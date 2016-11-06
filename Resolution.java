@@ -6,12 +6,14 @@ import java.util.Map;
 public class Resolution {
     private HashMap<Integer, String> dico = null;
     private GraphData grData = null;
+    private PrefixTreeData prefTrData = null;
     private QueryGraph qGr = null;
     private NeighIndexBis nghInd = null;
 	
-    public Resolution(HashMap<Integer, String> dico, GraphData grData, QueryGraph qGr, NeighIndexBis nghInd) {
+    public Resolution(HashMap<Integer, String> dico, GraphData grData, PrefixTreeData prefTrData, QueryGraph qGr, NeighIndexBis nghInd) {
 	this.dico = dico;
 	this.grData = grData;
+	this.prefTrData = prefTrData;
 	this.qGr = qGr;
 	this.nghInd = nghInd;
 	
@@ -74,13 +76,15 @@ public class Resolution {
 
 	Node nodeQGInit = nodesQG.get(indexNodeFinalSort.get(1));
 	ArrayList<Integer> predsQGInit = nodeQGInit.getRelFath().getPreds();
-	HashMap<Integer, ArrayList<Integer>> indexPreds = grData.getIndexPreds();
-	ArrayList<Integer> indexEnsInit = indexPreds.get(predsQGInit.get(0));
+
+	ArrayList<Integer> indexEnsInit = prefTrData.ensNodeWithPreds(predsQGInit);
+	
 	HashMap<Integer, Node> nodesData = grData.getNodes();
 	for(int i : indexEnsInit){
 	    Node nodeMatch = nodesData.get(i);
 	    int id = nodeMatch.getId();
 	    if(nghInd.neighbs(id, predsQGInit).contains(nodeQGInit.getId())){
+		System.out.println(id);
 		int j = 2;
 		boolean bool = true;
 		while(j < indexNodeFinalSort.size() && bool){

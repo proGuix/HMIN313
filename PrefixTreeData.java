@@ -12,7 +12,7 @@ public class PrefixTreeData {
 	
     public void create(){
 	HashMap<Integer, Node> nodesGrData = grData.getNodes();
-	for(Integer key : nodesGrData.keySet()){
+	for(int key : nodesGrData.keySet()){
 	    Node node = nodesGrData.get(key);
 	    ArrayList<Relation> rels = node.getRels();
 	    if(rels != null){
@@ -45,28 +45,32 @@ public class PrefixTreeData {
 	    Node nextNode = null;
 	    if(rel != null){
 		nextNode = rel.getChild();
-		nextNode.addId(idSubj);
+		if(!nextNode.getList_Id().contains(idSubj)){
+		    nextNode.addId(idSubj);
+		}
 	    }
 	    else{
 		nextNode = new Node();
 		nextNode.addId(idSubj);
 		rel = new Relation(nodeCur, nextNode);
 		rel.add(pred);
+		nodeCur.addRel(rel);
 	    }
 	    nodeCur = nextNode;
 	}
     }
 
-    public ArrayList<Integer> ensNodeWithPreds(int id, ArrayList<Integer> preds){
+    public ArrayList<Integer> ensNodeWithPreds(ArrayList<Integer> preds){
 	Node nodeCur = nodeRoot;
 	int i = 0; 
 	boolean bool = true;
 	while(i < preds.size() && bool){
+	    int p = preds.get(i);
 	    Relation rel = null;
 	    ArrayList<Relation> rels = nodeCur.getRels();
 	    if(rels != null){
 		for(Relation r : rels){
-		    if(preds.get(i) == r.getPreds().get(0)){
+		    if(p == r.getPreds().get(0)){
 			rel = r;
 			break;
 		    }

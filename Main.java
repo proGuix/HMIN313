@@ -47,7 +47,7 @@ public class Main {
 	qPsr.parse();
 	qPsr.createGraph();
 	QueryGraph qGr = qPsr.getQueryGraph();
-	Resolution res = new Resolution(dicoHM, grData, qGr, nghInd);
+	Resolution res = new Resolution(dicoHM, grData, prefTrData, qGr, nghInd);
 	ArrayList<String> result = res.execute();
 	for(String str : result){
 	    System.out.println(str);
