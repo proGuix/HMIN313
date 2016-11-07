@@ -1,0 +1,16 @@
+\select@language {french}
+\contentsline {section}{\numberline {}Introduction}{2}{section.0.1}
+\contentsline {section}{\numberline {}Impl\IeC {\'e}mentation}{2}{section.0.2}
+\contentsline {subsection}{\numberline {}Parsage triplets RDF}{2}{subsection.0.2.1}
+\contentsline {subsection}{\numberline {}Dictionnaire}{2}{subsection.0.2.2}
+\contentsline {subsection}{\numberline {}Graphe de donn\IeC {\'e}es}{2}{subsection.0.2.3}
+\contentsline {subsection}{\numberline {}Statistiques sur les donn\IeC {\'e}es}{2}{subsection.0.2.4}
+\contentsline {subsection}{\numberline {}Arbre des pr\IeC {\'e}fixes des relations}{3}{subsection.0.2.5}
+\contentsline {subsection}{\numberline {}Arbre de voisinage FP-TREE}{3}{subsection.0.2.6}
+\contentsline {subsection}{\numberline {}Parsage d'une requ\IeC {\^e}te \IeC {\'e}toile et pr\IeC {\'e}-traitements}{3}{subsection.0.2.7}
+\contentsline {subsection}{\numberline {}Graphe de la requ\IeC {\^e}te \IeC {\'e}toile et mesure de la s\IeC {\'e}lectivit\IeC {\'e} des branches}{3}{subsection.0.2.8}
+\contentsline {subsection}{\numberline {}R\IeC {\'e}solution}{4}{subsection.0.2.9}
+\contentsline {section}{\numberline {}Optimisations}{4}{section.0.3}
+\contentsline {section}{\numberline {}Difficult\IeC {\'e}s}{5}{section.0.4}
+\contentsline {section}{\numberline {}Utilisation du programme}{5}{section.0.5}
+\contentsline {section}{\numberline {}Tests}{5}{section.0.6}

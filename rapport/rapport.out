@@ -1,0 +1,15 @@
+\BOOKMARK [1][-]{section.0.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.0.2}{Impl\351mentation}{}% 2
+\BOOKMARK [2][-]{subsection.0.2.1}{Parsage triplets RDF}{section.0.2}% 3
+\BOOKMARK [2][-]{subsection.0.2.2}{Dictionnaire}{section.0.2}% 4
+\BOOKMARK [2][-]{subsection.0.2.3}{Graphe de donn\351es}{section.0.2}% 5
+\BOOKMARK [2][-]{subsection.0.2.4}{Statistiques sur les donn\351es}{section.0.2}% 6
+\BOOKMARK [2][-]{subsection.0.2.5}{Arbre des pr\351fixes des relations}{section.0.2}% 7
+\BOOKMARK [2][-]{subsection.0.2.6}{Arbre de voisinage FP-TREE}{section.0.2}% 8
+\BOOKMARK [2][-]{subsection.0.2.7}{Parsage d'une requ\352te \351toile et pr\351-traitements}{section.0.2}% 9
+\BOOKMARK [2][-]{subsection.0.2.8}{Graphe de la requ\352te \351toile et mesure de la s\351lectivit\351 des branches}{section.0.2}% 10
+\BOOKMARK [2][-]{subsection.0.2.9}{R\351solution}{section.0.2}% 11
+\BOOKMARK [1][-]{section.0.3}{Optimisations}{}% 12
+\BOOKMARK [1][-]{section.0.4}{Difficult\351s}{}% 13
+\BOOKMARK [1][-]{section.0.5}{Utilisation du programme}{}% 14
+\BOOKMARK [1][-]{section.0.6}{Tests}{}% 15
