@@ -62,7 +62,7 @@ public class Main {
 		bool = false;
 		break;
 	    case "2":
-		file = "100K.rdf";
+		file = "500K.rdf";
 		bool = false;
 		break;
 	    }
