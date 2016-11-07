@@ -84,7 +84,6 @@ public class Resolution {
 	    Node nodeMatch = nodesData.get(i);
 	    int id = nodeMatch.getId();
 	    if(nghInd.neighbs(id, predsQGInit).contains(nodeQGInit.getId())){
-		System.out.println(id);
 		int j = 2;
 		boolean bool = true;
 		while(j < indexNodeFinalSort.size() && bool){

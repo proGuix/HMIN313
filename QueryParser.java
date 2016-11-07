@@ -11,23 +11,74 @@ import java.util.HashMap;
 
 public class QueryParser {
     private HashMap<String, String> prefix = null;
-    private String query = null;
-    private String var_result = null;
-    private ArrayList<String[]> list_p_o = null;
-    private QueryGraph qGr = new QueryGraph();
+    //private String query = null;
+    //private String var_result = null;
+    //private ArrayList<String[]> list_p_o = null;
+    private QueryGraph qGr = null;
     private Dictionary dico = null;
+    private String file = null;
+    private ArrayList<ArrayList<String[]>> queries = null;
 	
-    public QueryParser(Dictionary dico){
+    public QueryParser(Dictionary dico, String file){
 	this.dico = dico;
+	this.file = file;
     }
+
+    public void parseBis(){	
+	queries = new ArrayList<>();
+	String line;
+	try (
+	     InputStream fis = new FileInputStream(file);
+	     InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
+	     BufferedReader br = new BufferedReader(isr);
+	     ) {
+		while ((line = br.readLine()) != null) {		   
+		    if(line.length() >= 6 && line.substring(0, 6).toUpperCase().equals("SELECT")){
+			queries.add(new ArrayList<String[]>());
+			/*int s1 = line.indexOf('?') + 1, s2 = 0;
+			for(int i = s1; i < line.length(); i++){
+			    if(line.charAt(i) == ' '){
+				s2 = i; 
+				break;
+			    }
+			}
+			var_result = line.substring(s1, s2);*/		       
+		    }
+		    if(line.length() > 0 && line.charAt(0) == '\t'){
+			String[] p_o = new String[2];
+			String[] fields = line.split(" ");
+			for(int j = 1; j < 3; j++){
+			    String field = fields[j];
+			    p_o[j-1] = field;
+			}
+			queries.get(queries.size() - 1).add(p_o);
+		    }
+		}
+	    } catch (FileNotFoundException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	} catch (IOException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+
+	/*for(ArrayList<String[]> list_p_o : queries){
+	    for(String[] p_o : list_p_o){
+		System.out.println(p_o[0] + " " + p_o[1]);
+	    }
+	    System.out.println();
+	}*/
+    }
+    
 	
-    public void parse(){
+    /*public void parse(){
 	prefix = new HashMap<String, String>();
 	list_p_o = new ArrayList<>();
 		
 	String line;
 	try (
-	     InputStream fis = new FileInputStream(PathFile.query_file);
+	     //InputStream fis = new FileInputStream(PathFile.query_file);
+	     InputStream fis = new FileInputStream(file);
 	     InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
 	     BufferedReader br = new BufferedReader(isr);
 	     ) {
@@ -74,17 +125,81 @@ public class QueryParser {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
-    }
+	}*/
 	
-    public String getVar_result() {
+    /*public String getVar_result() {
 	return var_result;
     }
 
     public ArrayList<String[]> getList_p_o() {
 	return list_p_o;
-    }
+    }*/
 	
-    public void createGraph(){       
+    public void createGraphBis(int k){     
+	qGr = new QueryGraph();
+	HashMap<Integer, Node> nodes = qGr.getNodes();
+	HashMap<Integer, Relation> rels = qGr.getRels();
+	ArrayList<Integer> nSort = qGr.getNodesSort();
+	qGr.addNode(new Node("v0"));
+	nSort.add(0);
+	ArrayList<String[]> list_p_o = queries.get(k);
+	for(String[] p_o : list_p_o){
+	    String s1 = p_o[0];
+	    int id1 = dico.getKey(s1);
+	    String s2 = p_o[1];
+	    int id2 = dico.getKey(s2);
+	    int key = qGr.getKey(id2);
+	    //System.out.println(id1 + " " + id2 + " " + key);
+	    if(key == -1){
+		Node n = new Node(id2);
+		Relation r = new Relation(nodes.get(0), n);
+		r.add(id1);
+		n.setRelFath(r);
+		qGr.addNode(n);
+		qGr.addRel(r);
+		nSort.add(nodes.size()-1);
+	    }
+	    else{
+		Node n = nodes.get(key);
+		Relation r = n.getRelFath();
+		ArrayList<Integer> preds = r.getPreds();
+		boolean bool = true;
+		int i = 0;
+		while(i < preds.size() && bool){
+		    if(id1 < preds.get(i)){
+			preds.add(i, id1);
+			bool = false;
+		    }
+		    else if(preds.get(i) == id1){
+			bool = false;
+		    }
+		    else{
+			i++;
+		    }
+		}
+		if(bool){
+		    preds.add(id1);
+		}
+		i = qGr.getIndexSort(key);
+		bool = true;
+		if(i > 1){
+		    while(i > 1 && bool){
+			int j = nSort.get(i-1);
+			if(preds.size() > nodes.get(j).getRelFath().getPreds().size()){
+			    nSort.set(i, j);
+			    nSort.set(i-1, key);
+			    i--;
+			}
+			else{
+			    bool = false;
+			}
+		    }
+		}
+	    }	    
+	}
+    }
+
+    /*public void createGraph(){       
 	HashMap<Integer, Node> nodes = qGr.getNodes();
 	HashMap<Integer, Relation> rels = qGr.getRels();
 	ArrayList<Integer> nSort = qGr.getNodesSort();
@@ -149,9 +264,18 @@ public class QueryParser {
 		}
 	    }	    
 	}
-    }
+	}*/
 
     public QueryGraph getQueryGraph(){
 	return qGr;
     }
+
+    public int getNbQuery(){
+	return queries.size();
+    }
+    
+    /*    public static void main(String[] args){
+	QueryParser qPsr = new QueryParser(null, "testsuite/queries/Q_3_nationality_gender_type.queryset");
+	qPsr.parseBis();
+	}*/
 }
