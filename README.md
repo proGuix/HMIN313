@@ -2,18 +2,8 @@
 
 git clone https://github.com/proGuix/HMIN313
 
-## Compile
+We created an application which takes a dataset of triplets RDF and stars queries. 
 
-   ruby compile.rb
+It returns results of stars queries, all of that runs in RAM.
 
-## Create JAR
-
-   jar cfe App.jar Main *.class
-
-## Run
-
-   java -jar App.jar
-
-## Clean
-   
-   ruby clean.rb
+Then, we compare our results with Jena.
