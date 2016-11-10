@@ -1,0 +1,1 @@
+`javac -classpath .:commons-codec-1.6.jar:jena-core-2.11.0.jar:owlapi-distribution-3.4.10.jar:httpclient-4.2.3.jar:jena-iri-1.0.0.jar:slf4j-api-1.6.4.jar:httpcore-4.2.2.jar:jena-sdb-1.4.0.jar:slf4j-log4j12-1.6.4.jar:jcl-over-slf4j-1.6.4.jar:jena-tdb-1.0.0.jar:xercesImpl-2.11.0.jar:xml-apis-1.4.01.jar:jena-arq-2.11.0.jar:log4j-1.2.16.jar JenaTest.java`
