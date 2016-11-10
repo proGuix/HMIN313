@@ -25,7 +25,7 @@ public class Main {
 	boolean bool = true;
 	String file = null;
 
-	File folder = new File("testsuite/dataset");
+	File folder = new File("test/dataset");
 	ArrayList<String> listFiles = Main.listFilesForFolder(folder);
 
 	HashMap<Integer, String> filesHM = new HashMap<>();
@@ -34,7 +34,7 @@ public class Main {
 	}
 
 	while(bool){
-	    System.out.println("\nChoose a dataset in repertory \"testsuite/dataset\" : ");	    
+	    System.out.println("\nChoose a dataset in repertory \"test/dataset\" : ");	    
 	    for(int i = 0; i < listFiles.size(); i++){
 		int j = i+1;
 		System.out.println(" " + j + " - " + listFiles.get(i));
@@ -54,7 +54,7 @@ public class Main {
 	    }	    
 	}
 
-	FileRDFParser fRDFPsr = new FileRDFParser("testsuite/dataset/" + file);
+	FileRDFParser fRDFPsr = new FileRDFParser("test/dataset/" + file);
 	System.out.println("Parse .rdf file, create dictionary and create graph data");
 	fRDFPsr.parse();
 	
@@ -72,7 +72,7 @@ public class Main {
 	HashMap<Integer, String> dicoHM = dico.getDico();
 
 	
-	folder = new File("testsuite/queries/");
+	folder = new File("test/queries/");
 	listFiles = Main.listFilesForFolder(folder);
 
 	while(true){
@@ -83,7 +83,7 @@ public class Main {
 		filesHM.put(i+1, listFiles.get(i));
 	    }
 	    while(bool){
-		System.out.println("\nChoose a file of queries in repertory \"testsuite/queries/\" : ");
+		System.out.println("\nChoose a file of queries in repertory \"test/queries/\" : ");
 		for(int i = 0; i < listFiles.size(); i++){
 		    int j = i+1;
 		    System.out.println(" " + j + " - " + listFiles.get(i));
@@ -103,21 +103,21 @@ public class Main {
 		}
 	    }
 
-	    QueryParser qPsr = new QueryParser(dico, "testsuite/queries/" + file);
+	    QueryParser qPsr = new QueryParser(dico, "test/queries/" + file);
 	    System.out.println("Parse queries");
 	    qPsr.parseBis();
 
 	    FileWriter fwR = null;
 	    FileWriter fwT = null;
 	    try{
-		File writeResult = new File("testsuite/queries_result_and_time/" + file + "_results.csv");
-		File writeTime = new File("testsuite/queries_result_and_time/" + file + "_times.csv");		
+		File writeResult = new File("test/queries_result_and_time/" + file + "_results.csv");
+		File writeTime = new File("test/queries_result_and_time/" + file + "_times.csv");		
 		writeResult.delete();        
 		writeResult.createNewFile();
 		writeTime.delete();        
 		writeTime.createNewFile();
-		fwR = new FileWriter("testsuite/queries_result_and_time/" + file + "_results.csv");	
-		fwT = new FileWriter("testsuite/queries_result_and_time/" + file + "_times.csv");
+		fwR = new FileWriter("test/queries_result_and_time/" + file + "_results.csv");	
+		fwT = new FileWriter("test/queries_result_and_time/" + file + "_times.csv");
 	    } catch(IOException e){}
 
 	    int nbQueries = qPsr.getNbQuery();

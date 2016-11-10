@@ -111,19 +111,19 @@ Le code actuel n'est pas factoriser, vue le nombre d'objet que nous devions impl
 
 Notre application s'appelle \textbf{App.jar}. Si vous voulez accéder au lien github de notre projet, les informations pour compiler et exécuter le programme y sont inscrites dans le README en anglais. Sinon ci-joint au rapport vous trouverez le projet déjà prêt à l'emploi. 
 
-La commande pour exécuter le programme est \textbf{java -jar App.jar} et laissez vous guider. Les fichiers de triplets RDF se trouve dans le dossier \textbf{testsuite/dataset}, le programme vous donne le choix de prendre entre 100K.rdf et 500K.rdf. Ensuite vous devez attendre que le programme charge les données, il vous donne à chaque chaque instant le nombre de triplets qu'il a déjà chargés. 
+La commande pour exécuter le programme est \textbf{java -jar App.jar} et laissez vous guider. Les fichiers de triplets RDF se trouve dans le dossier \textbf{test/dataset}, le programme vous donne le choix de prendre entre 100K.rdf et 500K.rdf. Ensuite vous devez attendre que le programme charge les données, il vous donne à chaque chaque instant le nombre de triplets qu'il a déjà chargés. 
 
-Une fois que les données sont créées, vous devez choisir le fichier de requêtes à exécuter, les fichiers se trouvent dans \textbf{testsuite/queries}, il y a en a neuf, chacun de ces fichiers possèdent cent requêtes.
+Une fois que les données sont créées, vous devez choisir le fichier de requêtes à exécuter, les fichiers se trouvent dans \textbf{test/queries}, il y a en a neuf, chacun de ces fichiers possèdent cent requêtes.
 
 Le programme vous donne une trace des résultats en console, dès que toutes les requêtes d'un fichier sont exécutées, le programme vous redemande si vous voulez exécuter un autre fichier de requêtes.
 
 Quand les requêtes d'un fichier sont exécutées, le programme écrit les résultats dans le dossier \\
-\textbf{testsuite/queries\_result\_and\_time}. Par exemple pour le fichier de requêtes \\Q\_1\_includes.queryset le programme renvoient les fichiers Q\_1\_includes.queryset\_result.csv et Q\_1\_includes.queryset\_time.csv. Pour chacun de ces deux fichiers, chaque ligne numéro $N$ correspond au résultat ou au temps (en ms) de la requête numéro $N$.
+\textbf{test/queries\_result\_and\_time}. Par exemple pour le fichier de requêtes \\Q\_1\_includes.queryset le programme renvoient les fichiers Q\_1\_includes.queryset\_result.csv et Q\_1\_includes.queryset\_time.csv. Pour chacun de ces deux fichiers, chaque ligne numéro $N$ correspond au résultat ou au temps (en ms) de la requête numéro $N$.
 
 \section{Tests}
-Le dossier \textbf{testsuite/queries\_result\_and\_time} contient déjà les tests effectués sur tous les fichiers de requêtes qui ont été interrogé sur le fichier 500K.rdf. Observer par exemple les fichiers \\Q\_1\_includes.queryset\_results.csv et Q\_1\_includes.queryset\_time.csv. 
+Le dossier \textbf{test/queries\_result\_and\_time} contient déjà les tests effectués sur tous les fichiers de requêtes qui ont été interrogé sur le fichier 500K.rdf. Observer par exemple les fichiers \\Q\_1\_includes.queryset\_results.csv et Q\_1\_includes.queryset\_time.csv. 
 
-Si vous lancez le programme est que vous relancez l'exécution sur le fichier de requêtes correspondant dans \textbf{testsuite/queries} alors ces deux fichiers seront remplacés.
+Si vous lancez le programme est que vous relancez l'exécution sur le fichier de requêtes correspondant dans \textbf{test/queries} alors ces deux fichiers seront remplacés.
 
 Nous conseillons d'utiliser le document 100K.rdf parce que sur un de nos ordinateurs personnels le temps de chargement de ce fichier est de quatre à cinq minutes, alors que pour le chargement du 500K.rdf il nous a fallu compter 2 heures.
 
