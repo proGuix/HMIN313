@@ -5,10 +5,6 @@ import java.io.Reader;
 import java.io.File;
 import java.io.FileWriter;
 
-import org.openrdf.rio.RDFFormat;
-import org.openrdf.rio.RDFParser;
-import org.openrdf.rio.Rio;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -26,46 +22,36 @@ public class Main {
     }
     
     public static void main(String args[]) throws FileNotFoundException {
-		
-	/*	Reader reader = new FileReader(PathFile.source_file);
-
-		RDFParser rdfParser = Rio.createParser(RDFFormat.RDFXML);
-		RDFListener rdfListener = new RDFListener();
-		rdfParser.setRDFHandler(rdfListener);
-		try {
-		rdfParser.parse(reader, "");
-		} catch (Exception e) {
-
-		}
-
-		try {
-		reader.close();
-		} catch (IOException e) {
-		}
-
-	
-		
-		Dictionary dico = rdfListener.getDico();*/
-
 	boolean bool = true;
 	String file = null;
+
+	File folder = new File("testsuite/dataset");
+	ArrayList<String> listFiles = Main.listFilesForFolder(folder);
+
+	HashMap<Integer, String> filesHM = new HashMap<>();
+	for(int i = 0; i < listFiles.size(); i++){
+	    filesHM.put(i+1, listFiles.get(i));
+	}
+
 	while(bool){
-	    System.out.println("\nChoose a dataset in repertory \"testsuite/dataset\" : ");
-	    System.out.println(" 1 - 100K.rdf");
-	    System.out.println(" 2 - 500K.rdf");
-	    System.out.print("\nTape 1 or 2 : ");
+	    System.out.println("\nChoose a dataset in repertory \"testsuite/dataset\" : ");	    
+	    for(int i = 0; i < listFiles.size(); i++){
+		int j = i+1;
+		System.out.println(" " + j + " - " + listFiles.get(i));
+	    }
+	    System.out.print("\nTape between 1 and " + listFiles.size() + " : ");
 	    Scanner sc = new Scanner(System.in);
 	    String str = sc.nextLine();
-	    switch(str){
-	    case "1":
-		file = "100K.rdf";
-		bool = false;
-		break;
-	    case "2":
-		file = "500K.rdf";
-		bool = false;
-		break;
-	    }
+	    int strToInt = 0;
+	    try {
+		strToInt = Integer.parseInt(str);
+		if(strToInt >= 1 && strToInt <= listFiles.size()){
+		    file = filesHM.get(strToInt);
+		    bool = false;
+		}
+	    } catch (NumberFormatException e) {
+		System.out.println("Wrong number");
+	    }	    
 	}
 
 	FileRDFParser fRDFPsr = new FileRDFParser("testsuite/dataset/" + file);
@@ -86,20 +72,21 @@ public class Main {
 	HashMap<Integer, String> dicoHM = dico.getDico();
 
 	
-	File folder = new File("testsuite/queries/");
-	ArrayList<String> listFiles = Main.listFilesForFolder(folder);
+	folder = new File("testsuite/queries/");
+	listFiles = Main.listFilesForFolder(folder);
 
 	while(true){
 	    bool = true;
 	    file = null;
-	    HashMap<Integer, String> filesHM = new HashMap<>();
+	    filesHM = new HashMap<>();
 	    for(int i = 0; i < listFiles.size(); i++){
 		filesHM.put(i+1, listFiles.get(i));
 	    }
 	    while(bool){
 		System.out.println("\nChoose a file of queries in repertory \"testsuite/queries/\" : ");
 		for(int i = 0; i < listFiles.size(); i++){
-		    System.out.println(i+1 + " - " + listFiles.get(i));
+		    int j = i+1;
+		    System.out.println(" " + j + " - " + listFiles.get(i));
 		}
 		System.out.print("\nTape between 1 and " + listFiles.size() + " : ");
 		Scanner sc = new Scanner(System.in);
