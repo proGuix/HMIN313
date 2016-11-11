@@ -148,6 +148,10 @@ public class QueryParser {
 	    int id1 = dico.getKey(s1);
 	    String s2 = p_o[1];
 	    int id2 = dico.getKey(s2);
+	    if(id1 == -1 || id2 == -1){
+		qGr = null;
+		return;
+	    }
 	    int key = qGr.getKey(id2);
 	    //System.out.println(id1 + " " + id2 + " " + key);
 	    if(key == -1){
@@ -199,73 +203,6 @@ public class QueryParser {
 	}
     }
 
-    /*public void createGraph(){       
-	HashMap<Integer, Node> nodes = qGr.getNodes();
-	HashMap<Integer, Relation> rels = qGr.getRels();
-	ArrayList<Integer> nSort = qGr.getNodesSort();
-	qGr.addNode(new Node(var_result));
-	nSort.add(0);
-	for(String[] p_o : list_p_o){
-	    String s1 = p_o[0];
-	    int id1 = -1;
-	    if(s1.indexOf('#') != -1){
-		id1 = dico.getKey(s1);
-	    }
-	    String s2 = p_o[1];
-	    int id2 = -1;
-	    if(s2.indexOf('#') != -1){
-		id2 = dico.getKey(s2);
-	    }
-	    int key = qGr.getKey(id2);
-	    if(key == -1){
-		Node n = new Node(id2);
-		Relation r = new Relation(nodes.get(0), n);
-		r.add(id1);
-		n.setRelFath(r);
-		qGr.addNode(n);
-		qGr.addRel(r);
-		nSort.add(nodes.size()-1);
-	    }
-	    else{
-		Node n = nodes.get(key);
-		Relation r = n.getRelFath();
-		ArrayList<Integer> preds = r.getPreds();
-		boolean bool = true;
-		int i = 0;
-		while(i < preds.size() && bool){
-		    if(id1 < preds.get(i)){
-			preds.add(i, id1);
-			bool = false;
-		    }
-		    else if(preds.get(i) == id1){
-			bool = false;
-		    }
-		    else{
-			i++;
-		    }
-		}
-		if(bool){
-		    preds.add(id1);
-		}
-		i = qGr.getIndexSort(key);
-		bool = true;
-		if(i > 1){
-		    while(i > 1 && bool){
-			int j = nSort.get(i-1);
-			if(preds.size() > nodes.get(j).getRelFath().getPreds().size()){
-			    nSort.set(i, j);
-			    nSort.set(i-1, key);
-			    i--;
-			}
-			else{
-			    bool = false;
-			}
-		    }
-		}
-	    }	    
-	}
-	}*/
-
     public QueryGraph getQueryGraph(){
 	return qGr;
     }
@@ -273,9 +210,4 @@ public class QueryParser {
     public int getNbQuery(){
 	return queries.size();
     }
-    
-    /*    public static void main(String[] args){
-	QueryParser qPsr = new QueryParser(null, "testsuite/queries/Q_3_nationality_gender_type.queryset");
-	qPsr.parseBis();
-	}*/
 }

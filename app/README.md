@@ -6,7 +6,7 @@
 
 ## Create JAR
 
-   jar cfe JenaTest.jar JenaTest *.class
+   jar cfe app.jar Main *.class
 
 ## Clean
    
@@ -14,4 +14,4 @@
 
 ## Run
 
-   java -jar JenaTest.jar
+   java -jar app.jar

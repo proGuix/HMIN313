@@ -25,7 +25,7 @@ public class Main {
 	boolean bool = true;
 	String file = null;
 
-	File folder = new File("../test/dataset");
+	File folder = new File(PathFile.dataset_folder);
 	ArrayList<String> listFiles = Main.listFilesForFolder(folder);
 
 	HashMap<Integer, String> filesHM = new HashMap<>();
@@ -34,7 +34,7 @@ public class Main {
 	}
 
 	while(bool){
-	    System.out.println("\nChoose a dataset in repertory \"../test/dataset\" : ");	    
+	    System.out.println("\nChoose a dataset in repertory \"../test/dataset/\" : ");	    
 	    for(int i = 0; i < listFiles.size(); i++){
 		int j = i+1;
 		System.out.println(" " + j + " - " + listFiles.get(i));
@@ -54,8 +54,10 @@ public class Main {
 	    }	    
 	}
 
-	FileRDFParser fRDFPsr = new FileRDFParser("../test/dataset/" + file);
+	FileRDFParser fRDFPsr = new FileRDFParser(PathFile.dataset_folder + file);
 	System.out.println("Parse .rdf file, create dictionary and create graph data");
+	long startTime0   = System.currentTimeMillis();
+
 	fRDFPsr.parse();
 	
 	Dictionary dico = fRDFPsr.getDico();
@@ -71,8 +73,11 @@ public class Main {
 	nghInd.create();
 	HashMap<Integer, String> dicoHM = dico.getDico();
 
+	long endTime0   = System.currentTimeMillis();
+	long totalTime0 = endTime0 - startTime0;
+	System.out.println("Time import dataset " + totalTime0 + " ms");
 	
-	folder = new File("../test/queries/");
+	folder = new File(PathFile.queries_folder);
 	listFiles = Main.listFilesForFolder(folder);
 
 	while(true){
@@ -103,21 +108,21 @@ public class Main {
 		}
 	    }
 
-	    QueryParser qPsr = new QueryParser(dico, "../test/queries/" + file);
+	    QueryParser qPsr = new QueryParser(dico, PathFile.queries_folder + file);
 	    System.out.println("Parse queries");
 	    qPsr.parseBis();
 
 	    FileWriter fwR = null;
 	    FileWriter fwT = null;
 	    try{
-		File writeResult = new File("../test/queries_result_and_time/" + file + "_results.csv");
-		File writeTime = new File("../test/queries_result_and_time/" + file + "_times.csv");		
+		File writeResult = new File(PathFile.result_and_time_folder + file + "_results.csv");
+		File writeTime = new File(PathFile.result_and_time_folder + file + "_times.csv");		
 		writeResult.delete();        
 		writeResult.createNewFile();
 		writeTime.delete();        
 		writeTime.createNewFile();
-		fwR = new FileWriter("../test/queries_result_and_time/" + file + "_results.csv");	
-		fwT = new FileWriter("../test/queries_result_and_time/" + file + "_times.csv");
+		fwR = new FileWriter(PathFile.result_and_time_folder + file + "_results.csv");	
+		fwT = new FileWriter(PathFile.result_and_time_folder + file + "_times.csv");
 	    } catch(IOException e){}
 
 	    int nbQueries = qPsr.getNbQuery();
@@ -126,13 +131,20 @@ public class Main {
 		long startTime = System.currentTimeMillis();
 		qPsr.createGraphBis(i);
 		QueryGraph qGr = qPsr.getQueryGraph();
-		Resolution res = new Resolution(dicoHM, grData, prefTrData, qGr, nghInd);
-		System.out.println("Execute query over data");
-		ArrayList<String> result = res.execute();
-		System.out.println("Results of query");
-		for(String str : result){
-		    System.out.println(str);
+		ArrayList<String> result = new ArrayList<>();
+		if(qGr == null){
+		    System.out.println("Execute query over data");
+		    System.out.println("Dictionary doesn't understand query");
 		}
+		else{
+		    Resolution res = new Resolution(dicoHM, grData, prefTrData, qGr, nghInd);
+		    System.out.println("Execute query over data");
+		    result = res.execute();
+		    System.out.println("Results of query");
+		    for(String str : result){
+			System.out.println(str);
+		    }
+		}	  
 
 		long endTime   = System.currentTimeMillis();
 		long totalTime = endTime - startTime;
