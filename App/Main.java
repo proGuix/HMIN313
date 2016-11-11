@@ -152,7 +152,7 @@ public class Main {
 		    }
 		    fwR.write("\n");
 		
-		    fwT.write(totalTime + " ms\n");
+		    fwT.write(totalTime + "\n");
 		} catch(IOException e){}
 	    }
 	    try{
