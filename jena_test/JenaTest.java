@@ -17,7 +17,6 @@ import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.QuerySolution;
-import org.apache.jena.query.ResultSet;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.RDFNode;
@@ -141,14 +140,14 @@ public class JenaTest {
 	    FileWriter fwR = null;
 	    FileWriter fwT = null;
 	    try{
-		File writeResult = new File(file + "_results.csv");
-		File writeTime = new File(file + "_times.csv");		
+		File writeResult = new File("../test/queries_result_and_time/" + file + "_results.csv");
+		File writeTime = new File("../test/queries_result_and_time/" + file + "_times.csv");		
 		writeResult.delete();        
 		writeResult.createNewFile();
 		writeTime.delete();        
 		writeTime.createNewFile();
-		fwR = new FileWriter(file + "_results.csv");	
-		fwT = new FileWriter(file + "_times.csv");
+		fwR = new FileWriter("../test/queries_result_and_time/" + file + "_results.csv");	
+		fwT = new FileWriter("../test/queries_result_and_time/" + file + "_times.csv");
 	    } catch(IOException e){}
 			
 	    for(int k = 0; k < queries.size(); k++){			
@@ -177,13 +176,13 @@ public class JenaTest {
 	
 		try {
 	
-		    ResultSet rs = qexec.execSelect();
+		    org.apache.jena.query.ResultSet rs = qexec.execSelect();
 		    while(rs.hasNext()){
 			QuerySolution qS = rs.next();
 			RDFNode rdfN = qS.get("v0");
 			String res = rdfN.toString();
-			System.out.println(res);
-			result.add(res);
+			System.out.println("<" + res + ">");
+			result.add("<" + res + ">");
 		    }
 		    //ResultSetFormatter.out(System.out, rs, query);
 	
