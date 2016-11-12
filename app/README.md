@@ -6,7 +6,7 @@
 
 ## Create JAR
 
-   jar cfe app.jar Main *.class
+   ruby create_jar.rb
 
 ## Clean
    

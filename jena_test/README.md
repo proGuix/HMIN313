@@ -5,8 +5,8 @@
    ruby compile.rb
 
 ## Create JAR
-
-   jar cfe jena_test.jar JenaTest *.class
+   
+   ruby create_jar.rb
 
 ## Clean
    
