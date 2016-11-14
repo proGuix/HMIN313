@@ -7,6 +7,15 @@
 \usetikzlibrary{shapes,arrows}
 \usepackage{hyperref}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\usepackage{filecontents}
+
+\pgfplotsset{every linear axis/.append style={
+    compat=1.8,
+    /pgf/number format/.cd,
+    use comma,
+    1000 sep={\,}}}
 
 \renewcommand\thesection{}
 \renewcommand\thesubsection{}
@@ -104,27 +113,246 @@ La principale difficulté que nous avons rencontré se base sur le temps d'étud
 
 Nous avons aussi pris du temps pour comprendre d'abord la solution par l'approche des graphes.
 
-Le code actuel n'est pas factoriser, vue le nombre d'objet que nous devions implémenter. Nous n'avons pas pris le temps d'enlever ce qui ne sert à rien car nous avons ré-implémenté des objets par manque d'efficacité.
+Le code actuel n'est pas factorisé, vue le nombre d'objet que nous devions implémenter. Nous n'avons pas pris le temps d'enlever ce qui ne sert à rien car nous avons ré-implémenté des objets par manque d'efficacité.
 
 
 \section{Utilisation du programme}
 
-Notre application s'appelle \textbf{App.jar}. Si vous voulez accéder au lien github de notre projet, les informations pour compiler et exécuter le programme y sont inscrites dans le README en anglais. Sinon ci-joint au rapport vous trouverez le projet déjà prêt à l'emploi. 
+Notre application s'appelle \textbf{app.jar}. Si vous voulez accéder au lien github de notre projet, les informations pour compiler et exécuter le programme y sont inscrites dans le README en anglais. Sinon ci-joint au rapport vous trouverez le projet déjà prêt à l'emploi. 
 
-La commande pour exécuter le programme est \textbf{java -jar App.jar} et laissez vous guider. Les fichiers de triplets RDF se trouve dans le dossier \textbf{test/dataset}, le programme vous donne le choix de prendre entre 100K.rdf et 500K.rdf. Ensuite vous devez attendre que le programme charge les données, il vous donne à chaque chaque instant le nombre de triplets qu'il a déjà chargés. 
+La commande pour exécuter le programme est \textbf{java -jar app.jar} et laissez vous guider. Les fichiers de triplets RDF se trouve dans le dossier \textbf{test/dataset}, le programme vous donne le choix de prendre entre 100K.rdf et 500K.rdf. Ensuite vous devez attendre que le programme charge les données, il vous donne à chaque chaque instant le nombre de triplets qu'il a déjà chargés. 
 
-Une fois que les données sont créées, vous devez choisir le fichier de requêtes à exécuter, les fichiers se trouvent dans \textbf{test/queries}, il y a en a neuf, chacun de ces fichiers possèdent cent requêtes.
+Une fois que les données sont créées, vous devez choisir le fichier de requêtes à exécuter, les fichiers se trouvent dans \textbf{test/queries}, il y a en a douze, chacun de ces fichiers possèdent cent requêtes.
 
 Le programme vous donne une trace des résultats en console, dès que toutes les requêtes d'un fichier sont exécutées, le programme vous redemande si vous voulez exécuter un autre fichier de requêtes.
 
 Quand les requêtes d'un fichier sont exécutées, le programme écrit les résultats dans le dossier \\
 \textbf{test/queries\_result\_and\_time}. Par exemple pour le fichier de requêtes \\Q\_1\_includes.queryset le programme renvoient les fichiers Q\_1\_includes.queryset\_result.csv et Q\_1\_includes.queryset\_time.csv. Pour chacun de ces deux fichiers, chaque ligne numéro $N$ correspond au résultat ou au temps (en ms) de la requête numéro $N$.
 
-\section{Tests}
-Le dossier \textbf{test/queries\_result\_and\_time} contient déjà les tests effectués sur tous les fichiers de requêtes qui ont été interrogé sur le fichier 500K.rdf. Observer par exemple les fichiers \\Q\_1\_includes.queryset\_results.csv et Q\_1\_includes.queryset\_time.csv. 
+\section{Benchmarks}
+Durant ce projet et afin de réaliser nos tests nous avons utilisé un benchmark standard, qui est WatDiv.\\
+Test possible pour chaque type de benchmark.\\
+WatDiv est un benchmark fait pour mesurer les performances d’un gestionnaire de données rdf. Il est composé de deux  générateurs un pour les données et le second pour les requêtes sur ce jeu de données. WatDiv permet aussi aux utilisateur de créer leurs propres jeux de données en paramétrant les entités et les associations.\\
 
-Si vous lancez le programme est que vous relancez l'exécution sur le fichier de requêtes correspondant dans \textbf{test/queries} alors ces deux fichiers seront remplacés.
+Pour nos tests nous avons utilisé le benchmark pré-configuré du Moodle : 100K et 500K de triplets pour les données et 12 fichiers de 100 requêtes.\\
 
-Nous conseillons d'utiliser le document 100K.rdf parce que sur un de nos ordinateurs personnels le temps de chargement de ce fichier est de quatre à cinq minutes, alors que pour le chargement du 500K.rdf il nous a fallu compter 2 heures.
 
+
+\section{Outils utilisés}
+
+Les tests ont été réalisés sur deux ordinateurs différents : 
+\begin{itemize}
+\item MAC OS X 10.11.6, 1.6 GHZ Intel Core i5, 8 Go RAM, 121 GO SSD.
+\item Linux Ubuntu 14.04 LTS, Intel Core i5, 4 Go RAM, 750 Go.
+\end{itemize}
+On aussi utilisé l'outil WatDiv afin de générer des données et des requêtes pour le test de notre programme.
+
+\section{Les métriques}
+
+Pour ces tests on va se baser sur deux métriques :
+\begin{itemize}
+\item Le temps de chargement des données par le programmes.
+\item Le temps d’exécution et de réponses pour les requêtes effectuées par le programme.
+\end{itemize}
+
+On va considérer les facteurs suivants :\\\\
+\begin{tabular}{|>{\centering\arraybackslash}p{5cm}|>{\centering\arraybackslash}p{5cm}|>{\centering\arraybackslash}p{5cm}|}
+  \hline
+  \bf CPU & 1.6 GHZ Intel Core i5 & 1.6 GHZ Intel Core i5  \\
+  \hline
+  \bf RAM & 8 Go & 4 Go \\
+  \hline
+  \bf La taille des données & 100 000 triplets & 500 000 triplets \\
+  \hline
+  \bf OS & MAC OS  X &  Linux Ubuntu 14.04\\
+  \hline
+\end{tabular}
+\\
+\\
+Nous pensons que la taille des données sera la facteur le plus important suivie de la RAM et la CPU et enfin l’OS. Et nous pouvons les répartir en facteurs principaux (RAM et Data size) et secondaires (CPU et OS)
+
+\section{Vérification et correction de notre système}
+Afin de nous assurer du bon fonctionnement de notre système, nous avons effectué les mêmes requêtes sur le même jeux de données mais cette fois-ci en utilisant Jena. Dans le dossier \textbf{completude/}, vous trouverez une classe Complétude qui compare les résultats de deux fichers : jena\_results.csv et app\_results.\\
+
+La procédure est la suivante :
+\begin{itemize}
+\item on entre les résultats d'une requete de jena dans un dictionnaire.
+\item pour chaque resultat d'une requete de notre application, on regarde si le resultat a déjà eté traité comme doublon.
+\item s'il n'existe pas déjà comme doublon alors on vérifie si le résultat existe dans le dictionnaire.
+\item s'il existe dans le dictionnaire, on met la valeur dans un ensemble ensExist, s'il ne contient pas on entre la valeur dans ensNExist.\\
+\end{itemize}
+
+On a ainsi l'ensemble ensExist des résultats qui sont vérifiés, l'ensemble ensNExist des résultats non vérifiés et enfin l'ensemble ensDbls des résultats doublons.\\
+
+Nous avons pu vérifié que notre système est à 100\% complet sans doublons sur les 1200 requetes pour les dataset 100K et 500K.
+
+
+\section{Technique d’évaluation}
+
+Nous pensons que les mesures cold, warm seront plus intéressants à utiliser dans la métrique qui concerne le temps d’exécution d’une requêtes, en effet lors de cette opération le système va chercher l’information dans la mémoire de l’ordinateur. 
+
+Afin de réaliser nos mesures, nous avons décider d’opérer de la manière :
+\begin{itemize}
+\item Nous exécutons notre système, puis celui du groupe avec qui nous devons comparer et enfin celui de Jena sur deux jeu de données de tailles différentes (100.000 et 500.000 triplets).
+\item Nous exécutons ensuite les 1200 requêtes sur chacun d’eux. 
+\item Nous obtenons alors 6 fichiers csv représentant chacun le temps d'exécutions des 1200 requêtes pour un système et une taille de données
+\item Cette opération sera réalisée 5 fois, une au démarrage de l’ordinateur («cold») et  quatres autres après au moins une exécution («warm»)
+\item Nous obtenons ainsi 30 fichiers avec chacun 1200 résultats. Nous parcourrons chacun des fichiers afin de réaliser une moyenne artihmétique du temps d'éxecution d'une requête.
+\item Nous obtenons donc 10 résultats pour chacun des systèmes, représentés dans les tableaux suivants : 
+  \\
+  \\
+  Les résultats pour 100.000 triplets.
+  \\
+  \begin{tabular}{|>{\centering\arraybackslash}p{3cm}||>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{2cm}|}
+    \hline
+    \bf Système & \bf Temps 1 "Cold" & \bf Temps 2 "Warm" & \bf Temps 3 "Warm" & \bf Temps 4 "Warm" & \bf Temps 5 "Warm" \\
+    \hline
+    Notre système & $1.5016 ms$ & $1.4775 ms$ & $1.3883 ms$  & $1.3558 ms$ & $1.3866 ms$\\
+    \hline
+    Jena& $1.0892 ms$ & $0.9892 ms$ & $1.1584 ms$  & $1.0261 ms$ & $0.97 ms$ \\
+    \hline
+    Système de Florient Dieu & $0.6388ms$ & $0.5578ms$ &  $0.5476ms$ & $0.4967ms$  & $0.5459ms$ \\
+    \hline
+  \end{tabular}
+  \\
+  \\
+  Les résultats pour 500.000 triplets.
+  \\
+  \begin{tabular}{|>{\centering\arraybackslash}p{3cm}||>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{2cm}|}
+    \hline
+    \bf Système & \bf Temps 1 "Cold" & \bf Temps 2 "Warm" & \bf Temps 3 "Warm" & \bf Temps 4 "Warm" & \bf Temps 5 "Warm" \\
+    \hline
+    Notre système & $5.9758 ms$ & $5.9366 ms$ & $5.8858 ms$  & $5.8691 ms$ & $5.8875 ms$\\
+    \hline
+    Jena& $1.8723 ms$ & $1.65 ms$ & $1.4592 ms$  & $1.7138 ms$ & $1.5723 ms$ \\
+    \hline
+    Système de Florient Dieu & $1.7689ms$ & $1.7381ms$ & $1.6690ms$ & $1.6072ms$ & $1.6061ms$  \\
+    \hline
+  \end{tabular}
+\end{itemize}
+\section{Experiment factoriel}
+
+
+Nous allons commencer par réaliser un expriment factoriel $2^2$, en utilisant le facteur de la mémoire et celui de la taille de données. Le temps affiché représente le temps d'éxecution des 1200 requêtes.
+\\\\
+\begin{tabular}{|>{\centering\arraybackslash}p{5cm}|>{\centering\arraybackslash}p{5cm}|>{\centering\arraybackslash}p{5cm}|}
+  \hline
+  & \bf 4 GB mémoire & \bf 8 GB mémoire  \\
+  \hline
+  \bf 100.000 triplets & $1569 ms$ & $1669 ms$ \\
+  \hline
+  \bf 500.000 triplets & $7922 ms$  & $7076 ms$  \\
+  \hline
+\end{tabular}
+\\\\
+Considérons la variable $x_a$ associée à la mémoire ($x_a = -1$ pour $4GB$ et $x_a = 1$ pour $8GB$) et la variable $x_b$ associée à la taille de la donnée ($x_b = -1$ pour $100.000$ triplets et $x_b = 1$ pour $500.000$ triplets).\\
+Le modèle de la non régréssion linéaire :
+\begin{center}
+  $y=q_0+q_a.x_a+q_b.x_b+q_{ab}.x_a.x_b$
+\end{center}
+Dans le cas du (low,low) ce qui revient à dire une mémoire de 4GB et une taille de données de $100.000$ triplets, on a :
+\begin{center}
+  $1569=q_0-q_a-q_b+q_{ab}$
+\end{center}
+Dans le cas du (high,low) ce qui revient à dire une mémoire de 8GB et une taille de données de $100.000$ triplets, on a :
+\begin{center}
+  $1669=q_0+q_a-q_b-q_{ab}$
+\end{center}
+Dans le cas du (low,high) ce qui revient à dire une mémoire de 4GB et une taille de données de $500.000$ triplets, on a :
+\begin{center}
+  $7922=q_0-q_a+q_b-q_{ab}$
+\end{center}
+Dans le cas du (high,high) ce qui revient à dire une mémoire de 8GB et une taille de données de $500.000$ triplets, on a :
+\begin{center}
+  $7076=q_0+q_a+q_b+q_{ab}$
+\end{center}
+Obtient donc :
+\begin{center}
+  $1569=q_0-q_a-q_b+q_{ab}$\\
+  $1669=q_0+q_a-q_b-q_{ab}$\\
+  $7922=q_0-q_a+q_b-q_{ab}$\\
+  $7076=q_0+q_a+q_b+q_{ab}$
+\end{center}
+Alors
+\begin{center}
+  $y=4559-86.5x_a+2940x_b-336,5x_{ab}$
+\end{center}
+Cette équation nous permet de déduire certaines propriétes de notre système :
+\begin{itemize}
+\item On remarque que l'effet de la variation de la mémoire sur le temps d'éxécution des requêtes est quasiment nulle et peut être considéré comme négligeable.
+\item Par contre la variation de la taille du jeu de données peut être considéré comme le facteur principal dans la variation du temps d'éxecution.
+\item l'intéraction entre les deux facteurs est aussi négligeable que la variation effectuée par la mémoire
+\end{itemize}
+
+Ensuite nous avons voulu faire un experiment factoriel avec $2^{4-1}$, avec 4 qui représente les facteurs cités dans la section «Les métriques» (CPU, RAM, Data size, OS) et 1 le facteurs parmi ceux précédemment cité dont on considérera qu'un seul niveau et qui se trouve être la CPU.
+Pour réaliser cet experiment nous avons besoin d'un ordinateur sous Mac avec 4Go de RAM et un autre sous Ubuntu avec 8 GO de RAM afin d'avoir les résultats nécéssaire. Malheuresement nous n'avons à disposition aucun des deux matériels cité précédemment .
+\newpage
+\section{Représentation graphique des résultats}
+
+\begin{center}
+  Temps d'import des données de notre système, de celui de jena et de celui de Florient Dieu selon 4 types de configuration.
+\end{center}
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}[]
+    \begin{axis}[
+        grid=major,
+        width=15cm, height=7cm,
+        grid style={dashed,gray!30},
+        xlabel=Environnement d'exécution,
+        ylabel=Temps d'exécution (ms),
+        legend style={at={(0.5,-0.35)},anchor=north,legend columns=-1},
+        log ticks with fixed point,
+        symbolic x coords={4GoRAM/100K, 4GoRAM/500K, 8GoRAM/100K, 8GoRAM/500K},
+        xtick=data,
+        ybar,
+        ymax=20000,
+        bar width=7pt
+      ]      
+      \addplot[blue,fill] plot coordinates {(4GoRAM/100K, 100000) (4GoRAM/500K,100000) (8GoRAM/100K,258107) (8GoRAM/500K,100000)};
+      \addplot[green,fill] plot coordinates {(4GoRAM/100K,2082) (4GoRAM/500K,9097) (8GoRAM/100K,1791) (8GoRAM/500K,6639)};
+      \addplot[orange,fill] plot coordinates {(4GoRAM/100K,4628) (4GoRAM/500K,5450) (8GoRAM/100K,5641) (8GoRAM/500K,14078)};
+      \legend{Notre app , Jena , F.Dieu app}
+    \end{axis}
+  \end{tikzpicture}
+\end{figure}
+\begin{center}
+  \color{blue} Moyenne arithmétique de 3 temps sur 5
+\end{center}
+Ce premier graphique correspond au temps d'import des données dans le système de notre application, de celle de Florient Dieu et enfin celle de Jena. Nous remarquons clairement un temps beaucoup plus important pour notre application, qui dans tout les cas de figure, représentés ici, le temps d'import dépasse largement ceux des autres applications.
+\newpage
+\begin{center}
+  Temps d'éxécution des 1200 requetes de notre système, de celui de jena et de celui de Florient Dieu selon 4 types de configuration.
+\end{center}
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}[]
+    \begin{axis}[
+        grid=major,
+        width=15cm, height=7cm,
+        grid style={dashed,gray!30},
+        xlabel=Environnement d'exécution,
+        ylabel=Temps d'exécution (ms),
+        legend style={at={(0.5,-0.35)},anchor=north,legend columns=-1},
+        log ticks with fixed point,
+        symbolic x coords={4GoRAM/100K, 4GoRAM/500K, 8GoRAM/100K, 8GoRAM/500K},
+        xtick=data,
+        ybar,
+        bar width=7pt
+      ]      
+      \addplot[blue,fill] plot coordinates {(4GoRAM/100K,1569) (4GoRAM/500K,7922) (8GoRAM/100K,1669) (8GoRAM/500K,7076)};
+      \addplot[green,fill] plot coordinates {(4GoRAM/100K,363) (4GoRAM/500K,959) (8GoRAM/100K,1487) (8GoRAM/500K,2143)};
+      \addplot[orange,fill] plot coordinates {(4GoRAM/100K,527) (4GoRAM/500K,583) (8GoRAM/100K,736) (8GoRAM/500K,2416)};
+      \legend{Notre app , Jena , F.Dieu app}
+    \end{axis}
+  \end{tikzpicture}
+\end{figure}
+\begin{center}
+  \color{blue} Moyenne arithmétique de 3 temps sur 5
+\end{center}
+Le deuxième graphique correspond aux temps d'executions des requêtes de notre application, de celle de Florient Dieu et enfin celle de Jena. Nous remarquons que  la taille de données a beaucoup d'importances dans les résultats. En effet les requêtes sur 100.000 triplets prennent moins de temps que sur les 500.000.\\
+Pour les 100.000 triplets nous remarquons aussi que le temps d'éxecution des requêtes prend un peu plus de temps pour notre application comparés aux autres, mais reste quand même assez proche. Contrairement à quand nous les éxécutons sur 500.000 triplets, où là on a une différence plus flagrante.
+\section{Conclusion}
+Nous avons eu comme objectif dès le départ, d'essayer d'optimiser les approches graphes vu en cours afin de réaliser un mini-moteur rdf le plus performant possible. Nous avons eu une idée d'optimisation, que nous pensions performante. Nous l'avons implémenté pour ce projet, malheuresement les résultats obtenues étaient en dessous de nos prévisions avec une performance en deesous des applications avec lesquelles nous l'avons comparé.\\
+La question à se poser maintenant est pourquoi cette optimisation, que nous pensions éfficace, se retrouve être moins intéréssante que les autres proposées. 
 \end{document}
