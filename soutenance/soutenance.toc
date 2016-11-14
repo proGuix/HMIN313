@@ -1,10 +1,11 @@
 \beamer@endinputifotherversion {3.24pt}
 \select@language {french}
-\beamer@sectionintoc {1}{Exemple de r\IeC {\'e}solution}{2}{0}{1}
-\beamer@subsectionintoc {1}{1}{Import des donn\IeC {\'e}es}{3}{0}{1}
-\beamer@subsectionintoc {1}{2}{Requete \IeC {\'e}toile}{5}{0}{1}
-\beamer@sectionintoc {2}{Tests}{7}{0}{2}
-\beamer@subsectionintoc {2}{1}{Technique d'\IeC {\'e}valuation}{8}{0}{2}
-\beamer@subsectionintoc {2}{2}{Temps d'import des donn\IeC {\'e}es}{10}{0}{2}
-\beamer@subsectionintoc {2}{3}{Temps d'\IeC {\'e}x\IeC {\'e}cution des requetes}{12}{0}{2}
-\beamer@sectionintoc {3}{Conclusion}{14}{0}{3}
+\beamer@sectionintoc {1}{Introduction}{2}{0}{1}
+\beamer@sectionintoc {2}{Exemple de r\IeC {\'e}solution}{4}{0}{2}
+\beamer@subsectionintoc {2}{1}{Import des donn\IeC {\'e}es}{5}{0}{2}
+\beamer@subsectionintoc {2}{2}{Requete \IeC {\'e}toile}{7}{0}{2}
+\beamer@sectionintoc {3}{Tests}{9}{0}{3}
+\beamer@subsectionintoc {3}{1}{Technique d'\IeC {\'e}valuation}{10}{0}{3}
+\beamer@subsectionintoc {3}{2}{Temps d'import des donn\IeC {\'e}es}{12}{0}{3}
+\beamer@subsectionintoc {3}{3}{Temps d'\IeC {\'e}x\IeC {\'e}cution des requetes}{14}{0}{3}
+\beamer@sectionintoc {4}{Conclusion}{16}{0}{4}
